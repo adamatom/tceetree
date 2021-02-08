@@ -26,7 +26,7 @@
 #ifndef _TTREEPARAM_H
 #define _TTREEPARAM_H
 
-#define TT_MAXROOTS 5  // maximum number of roots
+#define TT_MAXROOTS 100 // maximum number of roots
 #define TT_MAXSTYLES 6 // maximum number of styles + colors
 #define TT_MAXEXCLUDF                                                          \
 	20 // maximum number of functions that can be excluded from tree

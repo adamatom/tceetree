@@ -33,6 +33,11 @@
 #include "slib.h"
 #endif // _ALL_IN_ONE
 
+#define debug_printf(fmt, ...) \
+    do { \
+		printf("%s:%d:%s(): " fmt, __FILE__, __LINE__, __func__, __VA_ARGS__); \
+    } while (0)
+
 static FILE *grafile = NULL; // output file pointer
 
 #define HSTYLESNO TT_MAXSTYLES // maximum colors + styles
@@ -106,25 +111,27 @@ int outnode_gra(ttreenode_t *pnode, treeparam_t *pparam)
 			// use the filename without path and with extension as
 			// the cluster label
 			iErr = slibbasename(&sclusterlabel, pnode->filename, 1);
+
 			if (iErr == 0) {
 				// if no file information is present, function
 				// will be grouped into the
 				// library cluster
-				if (sclusterlabel == NULL)
-					iErr = slibcpy(&sclusterlabel,
-						       TT_LIBRARY, -1);
+				if (sclusterlabel == NULL) {
+					iErr = slibcpy(&sclusterlabel, TT_LIBRARY, -1);
+				}
+
+
 				if (iErr == 0) {
-					iErr = slibcpy(&sclustername,
-						       sclusterlabel, -1);
+					iErr = slibcpy(&sclustername, sclusterlabel, -1);
 					if (iErr == 0) {
 						// replace . with _ for the
 						// cluster name
 						n = strlen(sclustername);
-						for (i = 0; i < n; i++)
-							if (sclustername[i] ==
-							    '.')
-								sclustername
-								    [i] = '_';
+						for (i = 0; i < n; i++) {
+							if (sclustername[i] == '.') {
+								sclustername [i] = '_';
+							}
+						}
 					}
 				}
 			}
@@ -136,8 +143,8 @@ int outnode_gra(ttreenode_t *pnode, treeparam_t *pparam)
 						 "labeljust=\"l\"; ",
 					sclustername, sclusterlabel);
 			}
-			free(sclustername);
-			free(sclusterlabel);
+			// free(sclustername);
+			// free(sclusterlabel);
 		}
 
 		if (iErr == 0) {
